@@ -17,15 +17,11 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 
-import Item from "./Item.vue";
-
-export default {
-    name: "Nav",
-    components: {
-        Item
-    }
-}
+export default defineComponent({
+    name: "Nav"
+});
 </script>
 
 <style scoped lang="scss">
@@ -59,8 +55,7 @@ export default {
             margin-left: 1rem;
             position: relative;
             text-align: center;
-            width:4rem
-
+            width: 4rem
         }
     }
 
