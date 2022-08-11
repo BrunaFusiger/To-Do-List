@@ -1,7 +1,64 @@
 <template>
   <div class="home">
+    <Nav />
+    <Item />
+    <!-- {{ $route }} -->
   </div>
 </template>
+
+<script>
+import { defineComponent } from 'vue'
+import Item from '@/components/Item.vue';
+import Axios from 'axios';
+import Nav from "@/components/Nav.vue";
+// import { homedir } from 'os';
+
+
+export default defineComponent({
+  data() {
+    return {
+      axios: null,
+    }
+  },
+  components: {
+    Nav,
+    Item
+  },
+  beforeMount() {
+    console.log("Before Mount called");
+    this.axios = Axios.create();
+    this.getItems();
+  },
+  methods: {
+    getItems() {
+      this.axios.get("https://localhost:7018/todo/2",
+        { headers: { "Access-Control-Allow-Origin": "*" } })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    }
+  },
+});
+</script>
+
+<style lang="scss">
+a {
+  text-decoration: none;
+  color: #000355;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 10px;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  transition: .5s;
+
+  &:hover {
+    background-color: rgb(139, 145, 169);
+    border-color: rgba($color: #ffffff, $alpha: .2);
+    color: #fff;
+    transform: scale(1.05);
+  }
+}
+</style>
 
 
 

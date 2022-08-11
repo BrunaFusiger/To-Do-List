@@ -3,9 +3,9 @@
         <section id="nav" class="flex">
             <h1>To Do List</h1>
             <div id="nav-buttons" class="flex">
-                <a href="all">ALL</a>
-                <a href="done">DONE</a>
-                <a href="undone">UNDONE</a>
+                <router-link to="/">ALL</router-link>
+                <router-link to="/done">DONE</router-link>
+                <router-link to="/undone">UNDONE</router-link>
             </div>
         </section>
 
@@ -25,11 +25,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-#base {
-    display: block;
-    margin: 5rem auto;
-    max-width: 50%;
+@use '@/assets/style/mixins' as *;
 
+#base {
+    @include base;
 }
 
 .flex {
@@ -43,14 +42,10 @@ export default defineComponent({
     align-items: center;
 
     h1 {
-        font-weight: 600;
-        font-size: 50px;
-        line-height: 68px;
-        cursor: default;
+        @include title;
     }
 
     &-buttons {
-
         a {
             margin-left: 1rem;
             position: relative;
@@ -63,11 +58,9 @@ export default defineComponent({
         justify-content: space-between;
 
         &-text {
-            background-color: rgba($color: #ffffff, $alpha: .7);
-            color: #000;
+            @include inputForm;
             width: 80%;
             max-width: 80%;
-            border-radius: 6px;
         }
 
         a {
