@@ -1,0 +1,18 @@
+@mixin inputForm {
+    background-color: rgba($color: #ffffff, $alpha: .7);
+    color: #000;
+    border-radius: 6px;
+    height: 2rem;
+}
+
+@mixin title {
+    font-weight: 600;
+    font-size: 3rem;
+    cursor: default;
+}
+
+@mixin base {
+    display: block;
+    margin: 5rem auto;
+    max-width: 50%;
+}
