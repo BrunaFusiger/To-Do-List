@@ -15,23 +15,16 @@ import Nav from "@/components/Nav.vue";
 
 
 export default defineComponent({
-  data() {
-    return {
-      axios: null,
-    }
+  beforeMount(){
+    this.getItems(0);
   },
   components: {
     Nav,
     Item
   },
-  beforeMount() {
-    console.log("Before Mount called");
-    this.axios = Axios.create();
-    this.getItems();
-  },
   methods: {
     getItems() {
-      this.axios.get("https://localhost:7018/todo/2",
+      Axios.create().get("https://localhost:7018/todo/2",
         { headers: { "Access-Control-Allow-Origin": "*" } })
         .then(res => console.log(res))
         .catch(err => console.log(err));

@@ -1,5 +1,5 @@
 <template>
-  <form id="base">
+  <form id="base" @submit.prevent>
     <h1> {{ $route.name }} </h1>
 
     <section class="input">
@@ -8,11 +8,12 @@
           'Digite um Nickname Válido:' :
           'Digite o seu Nickname:'
       }}</p>
-      <input type="text" placeholder="  Digite o nickname aqui">
+      <input v-model="nickname" type="text" placeholder="Digite o nickname aqui" />
     </section>
 
     <div class="buttons">
-      <a href=""><input type="submit">ENVIAR</a>
+      <button v-if="isCadastro" @click="cadastrar">Cadastrar</button>
+      <button v-else @click="login">Entrar</button>
 
       <router-link v-if="isCadastro" to="/login" class="link-button">Ou faça o login aqui</router-link>
       <router-link v-else to="/cadastro" class="link-button">Ou cadastre-se aqui</router-link>
@@ -22,16 +23,42 @@
 
 <script>
 import { defineComponent } from 'vue';
+import Axios from 'axios';
+import { useUserStore } from '@/store/userStore.js';
 
 export default defineComponent({
   data() {
     return {
+      userStore: useUserStore(),
+      nickname: null,
     }
   },
   computed: {
     isCadastro() {
       return this.$route.name == 'cadastro';
     }
+  },
+  methods: {
+    login() {
+      Axios.create().post("https://localhost:7018/user/login",
+        this.nickname,
+        { headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" }, })
+        .then(res => {
+          this.userStore.setUser(res.data.entity);
+          this.$router.push({ path: "/" });
+        })
+        .catch(err => console.log(err));
+    },
+    cadastrar() {
+      Axios.create().post("https://localhost:7018/user/cadastro",
+        this.nickname,
+        { headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" } })
+        .then(res => {
+          this.userStore.setUser(res.data.entity);
+          this.$router.push({ path: "/" });
+        })
+        .catch(err => console.log(err));
+    },
   }
 });
 </script>
@@ -81,7 +108,7 @@ export default defineComponent({
   }
 
   .buttons {
-    a {
+    button {
       display: block;
       margin: 3rem auto;
       width: 40%;
