@@ -3,7 +3,8 @@
     <h1> {{ $route.name }} </h1>
 
     <section class="input">
-      <span>nickname inválido</span>
+      <Message :msg="msg" v-show="msg" />
+
       <p>{{ isCadastro ?
           'Digite um Nickname Válido:' :
           'Digite o seu Nickname:'
@@ -25,12 +26,17 @@
 import { defineComponent } from 'vue';
 import Axios from 'axios';
 import { useUserStore } from '@/store/userStore.js';
+import Message from '@/components/Message.vue';
 
 export default defineComponent({
+  components: {
+    Message
+  },
   data() {
     return {
       userStore: useUserStore(),
       nickname: null,
+      msg: null
     }
   },
   computed: {
@@ -47,7 +53,14 @@ export default defineComponent({
           this.userStore.setUser(res.data.entity);
           this.$router.push({ path: "/" });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+          this.msg = err.response.data.description;
+          setTimeout(() => this.msg = "", 3000);
+        }
+        );
+
+
     },
     cadastrar() {
       Axios.create().post("https://localhost:7018/user/cadastro",
@@ -57,8 +70,15 @@ export default defineComponent({
           this.userStore.setUser(res.data.entity);
           this.$router.push({ path: "/" });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+          this.msg = err.response.data.description;
+          setTimeout(() => this.msg = "", 3000);
+        }
+        );
     },
+
+
   }
 });
 </script>
@@ -85,13 +105,6 @@ export default defineComponent({
     display: block;
     text-align: center;
     width: 100%;
-
-    span {
-      background-color: rgba($color: #161bb1, $alpha: .3);
-      color: rgb(218, 19, 19);
-      padding: .5rem 3rem;
-      display: none;
-    }
 
     p {
       text-align: start;

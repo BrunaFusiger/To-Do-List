@@ -3,6 +3,8 @@
     color: #000;
     border-radius: 6px;
     height: 2rem;
+    border-color: transparent;
+    outline: none
 }
 
 @mixin title {

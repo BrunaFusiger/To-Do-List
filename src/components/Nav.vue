@@ -10,17 +10,44 @@
         </section>
 
         <section id="nav-input" class="flex">
-            <input type="text" value="" placeholder="  Digite a sua tarefa aqui" id="nav-input-text">
-            <a href=""><input type="submit" value="" id="add"> ADD</a>
+            <input type="text" v-model="task" placeholder="Digite a sua tarefa aqui" id="nav-input-text">
+            <button @click="addTask">ADD</button>
         </section>
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import Axios from 'axios';
+import { useUserStore } from '@/store/userStore';
+import { useTodoStore } from '@/store/todoStore';
 
 export default defineComponent({
-    name: "Nav"
+    name: "Nav",
+    data() {
+        return {
+            task: "",
+        }
+    },
+    methods: {
+        addTask() {
+            console.log(this.task);
+            console.log(this.todoStore);
+            Axios.create().post(`https://localhost:7018/todo/create/${useUserStore().user.id}`,
+                this.task,
+                { headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" }, })
+                .then(res => {
+                    useTodoStore().setTodoItem(res.data.entity);
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.task = err.response.data.description;
+                }
+                );
+
+            this.task = "";
+        }
+    }
 });
 </script>
 

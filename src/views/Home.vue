@@ -11,12 +11,14 @@ import { defineComponent } from 'vue'
 import Item from '@/components/Item.vue';
 import Axios from 'axios';
 import Nav from "@/components/Nav.vue";
+import { useTodoStore } from '@/store/todoStore';
+import { useUserStore } from '@/store/userStore';
 // import { homedir } from 'os';
 
 
 export default defineComponent({
-  beforeMount(){
-    this.getItems(0);
+  beforeMount() {
+    this.getItems();
   },
   components: {
     Nav,
@@ -24,9 +26,11 @@ export default defineComponent({
   },
   methods: {
     getItems() {
-      Axios.create().get("https://localhost:7018/todo/2",
+      Axios.create().get(`https://localhost:7018/todo/${useUserStore().user.id}`,
         { headers: { "Access-Control-Allow-Origin": "*" } })
-        .then(res => console.log(res))
+        .then(res => {
+          useTodoStore().setTodoItems(res.data.entity);
+        })
         .catch(err => console.log(err));
     }
   },
@@ -34,7 +38,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-a {
+a,
+button {
   text-decoration: none;
   color: #000355;
   background-color: #fff;
