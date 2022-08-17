@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Nav />
-    <Item />
+    <Item v-for="todoItem in todoStore.todoItems" :key="todoItem.id" :todoItem="todoItem" />
     <!-- {{ $route }} -->
   </div>
 </template>
@@ -17,6 +17,15 @@ import { useUserStore } from '@/store/userStore';
 
 
 export default defineComponent({
+  data() {
+    return {
+    }
+  },
+  computed: {
+    todoStore() {
+      return useTodoStore()
+    }
+  },
   beforeMount() {
     this.getItems();
   },

@@ -1,5 +1,5 @@
 <template>
-    <div id="base">
+    <header id="base">
         <section id="nav" class="flex">
             <h1>To Do List</h1>
             <div id="nav-buttons" class="flex">
@@ -13,7 +13,7 @@
             <input type="text" v-model="task" placeholder="Digite a sua tarefa aqui" id="nav-input-text">
             <button @click="addTask">ADD</button>
         </section>
-    </div>
+    </header>
 </template>
 
 <script>
