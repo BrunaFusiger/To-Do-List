@@ -1,6 +1,6 @@
 <template>
-    <div class="item">
-        <section class="todoItem">
+    <div class="item" v-if="shouldApper">
+        <section :class="`todoItem ${todoItem.done ? 'todo-done' : 'todo-undone'}`">
             <div>
                 <input @focusout="editItem" v-if="isEditMode" type="text" v-model="editDescription" class="input-edit"
                     autocomplete="off" />
@@ -44,8 +44,17 @@ export default defineComponent({
             isEditMode: false,
         }
     },
-    components: {
-        Check
+    computed: {
+        shouldApper() {
+            var currentDir = this.$route.path.slice(1).split('/')[0];
+            if (currentDir == "")
+                return true;
+            if (currentDir == "done" && this.todoItem.done)
+                return true;
+            if (currentDir == "undone" && !this.todoItem.done)
+                return true;
+            return false;
+        }
     },
     methods: {
         setEditMode(isEditMode) {
@@ -73,11 +82,22 @@ export default defineComponent({
         },
         checkItem() {
             this.todoItem.done = !this.todoItem.done;
+
+            Axios.create().put("https://localhost:7018/todo/update",
+                this.todoItem,
+                { headers: { "Access-Control-Allow-Origin": "*" } })
+                .then(() => {
+                    useTodoStore().editTodoItem(this.todoItem);
+                })
+                .catch(err => console.log(err));
         }
     },
     props: {
         todoItem: Object
-    }
+    },
+    components: {
+        Check
+    },
 })
 </script>
 
@@ -97,11 +117,7 @@ export default defineComponent({
 
         background: rgba(0, 0, 0, 0.25);
         border-radius: 6px;
-        border: 1px solid rgba($color: #fff, $alpha: .1);
         box-shadow: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.25));
-
-
-        border-left: .2rem solid #00FF19;
 
         &-buttons {
             height: 2rem;
@@ -157,6 +173,19 @@ export default defineComponent({
                 }
             }
         }
+    }
+
+    .todo-done {
+        border-left: .2rem solid #00FF19;
+
+        p {
+            text-decoration: line-through #fff 1.6px;
+        }
+
+    }
+
+    .todo-undone {
+        border-left: .2rem solid #FF0000;
     }
 }
 </style>

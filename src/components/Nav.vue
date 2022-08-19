@@ -32,8 +32,6 @@ export default defineComponent({
     },
     methods: {
         addTask() {
-            console.log(this.task);
-            console.log(this.todoStore);
             Axios.create().post(`https://localhost:7018/todo/create/${useUserStore().user.id}`,
                 this.task,
                 { headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" }, })
@@ -47,7 +45,7 @@ export default defineComponent({
                 );
 
             this.task = "";
-        }
+        },
     }
 });
 </script>
@@ -103,4 +101,5 @@ export default defineComponent({
         }
     }
 }
+
 </style>

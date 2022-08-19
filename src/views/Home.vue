@@ -2,7 +2,6 @@
   <div class="home">
     <Nav />
     <Item v-for="todoItem in todoStore.todoItems" :key="todoItem.id" :todoItem="todoItem" autocomplete="off" />
-    <!-- {{ $route }} -->
   </div>
 </template>
 
