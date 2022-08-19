@@ -93,6 +93,10 @@ export default defineComponent({
   h1 {
     @include title;
     text-transform: uppercase;
+
+    @include mobile {
+      font-size: 2rem;
+    }
   }
 
   a input {
@@ -122,12 +126,21 @@ export default defineComponent({
     button {
       display: block;
       margin: 3rem auto;
-      width: 40%;
+      padding: 10px 5rem;
+
+      @include mobile {
+         padding: 10px;
+      }
     }
 
     .link-button {
       background-color: transparent;
       color: #fff;
+
+       @include mobile {
+        font-size: .6rem;
+        text-align: center;
+      }
     }
   }
 }

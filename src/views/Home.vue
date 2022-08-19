@@ -46,6 +46,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@use '@/assets/style/mixins' as *;
+
 a,
 button {
   text-decoration: none;
@@ -56,6 +58,12 @@ button {
   text-transform: uppercase;
   letter-spacing: .1rem;
   transition: .5s;
+
+
+  @include mobile {
+     padding: 8px;
+     font-size: .7rem;
+  }
 
   &:hover {
     background-color: rgb(139, 145, 169);
@@ -74,6 +82,11 @@ svg {
   &:hover {
     transform: scale(1.2);
   }
+}
+
+.active {
+  background-color: rgb(139, 145, 169);
+  color: #fff;
 }
 </style>
 

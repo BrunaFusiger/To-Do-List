@@ -3,9 +3,9 @@
         <section id="nav" class="flex">
             <h1>To Do List</h1>
             <div id="nav-buttons" class="flex">
-                <router-link to="/">ALL</router-link>
-                <router-link to="/done">DONE</router-link>
-                <router-link to="/undone">UNDONE</router-link>
+                <router-link to="/" :class="`${$route.name === 'all' ? 'active' : ''}`">ALL</router-link>
+                <router-link to="/done" :class="`${$route.name === 'done' ? 'active' : ''}`">DONE</router-link>
+                <router-link to="/undone" :class="`${$route.name === 'undone' ? 'active' : ''}`">UNDONE</router-link>
             </div>
         </section>
 
@@ -67,32 +67,63 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
 
+    @include mobile {
+        display: block;
+        margin-bottom: 3rem;
+    }
+
+
     h1 {
         @include title;
+
+        @include mobile {
+            font-size: 2rem;
+            text-align: center;
+        }
     }
 
     &-buttons {
         a {
+            @include mobile {
+                text-align: center;
+                margin-inline: auto;
+                margin-left: .5rem;
+            }
+
             margin-left: 1rem;
             position: relative;
             text-align: center;
-            width: 4rem
+            width: 4rem;
         }
     }
 
     &-input {
         justify-content: space-between;
 
+        @include mobile {
+            display: block;
+            text-align: center;
+        }
+
         &-text {
             @include inputForm;
             width: 80%;
             max-width: 80%;
+
+            @include mobile {
+                margin-bottom: 1rem;
+            }
         }
 
-        a {
-            width: 10%;
+        button {
+            width: 15%;
             max-width: 80%;
             text-align: center;
+
+            @include mobile {
+                width: 80%;
+                max-width: 50%;
+            }
 
             #add {
                 display: none;
@@ -101,5 +132,4 @@ export default defineComponent({
         }
     }
 }
-
 </style>
