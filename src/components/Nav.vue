@@ -10,7 +10,8 @@
         </section>
 
         <section id="nav-input" class="flex">
-            <input type="text" v-model="task" placeholder="Digite a sua tarefa aqui" id="nav-input-text">
+            <input type="text" v-model="task" placeholder="Digite a sua tarefa aqui" id="nav-input-text"
+                autocomplete="off">
             <button @click="addTask">ADD</button>
         </section>
     </header>

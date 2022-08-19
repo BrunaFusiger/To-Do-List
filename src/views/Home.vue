@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Nav />
-    <Item v-for="todoItem in todoStore.todoItems" :key="todoItem.id" :todoItem="todoItem" />
+    <Item v-for="todoItem in todoStore.todoItems" :key="todoItem.id" :todoItem="todoItem" autocomplete="off" />
     <!-- {{ $route }} -->
   </div>
 </template>
@@ -63,6 +63,17 @@ button {
     border-color: rgba($color: #ffffff, $alpha: .2);
     color: #fff;
     transform: scale(1.05);
+  }
+}
+
+svg {
+  margin-right: 1rem;
+  transition: .8s;
+  width: 1.5rem;
+  height: 1.5rem;
+
+  &:hover {
+    transform: scale(1.2);
   }
 }
 </style>

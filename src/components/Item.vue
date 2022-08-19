@@ -2,10 +2,18 @@
     <div class="item">
         <section class="todoItem">
             <div>
-                <input @focusout="editItem" v-if="isEditMode" type="text" v-model="editDescription" />
+                <input @focusout="editItem" v-if="isEditMode" type="text" v-model="editDescription" class="input-edit"
+                    autocomplete="off" />
                 <p v-else> {{ todoItem.description }} </p>
             </div>
-            <div>
+            <div class="todoItem-buttons">
+                <button @click="deleteItem">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
+                            fill="#F24E1E" />
+                    </svg>
+                </button>
                 <button @click="setEditMode(true)">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -14,13 +22,9 @@
                     </svg>
                 </button>
 
-                <button @click="deleteItem">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
-                            fill="#F24E1E" />
-                    </svg>
-                </button>
+                <div :class="`check-item ${todoItem.done ? 'done' : ''}`" @click="checkItem">
+                    <Check v-show="todoItem.done" />
+                </div>
             </div>
         </section>
     </div>
@@ -30,6 +34,7 @@
 import { defineComponent } from "vue"
 import { useTodoStore } from '@/store/todoStore';
 import Axios from 'axios';
+import Check from "@/components/Check.vue";
 
 export default defineComponent({
     name: "item",
@@ -38,6 +43,9 @@ export default defineComponent({
             editDescription: this.todoItem.description,
             isEditMode: false,
         }
+    },
+    components: {
+        Check
     },
     methods: {
         setEditMode(isEditMode) {
@@ -62,6 +70,9 @@ export default defineComponent({
                     useTodoStore().editTodoItem(editedTodoItem);
                 })
                 .catch(err => console.log(err));
+        },
+        checkItem() {
+            this.todoItem.done = !this.todoItem.done;
         }
     },
     props: {
@@ -82,9 +93,7 @@ export default defineComponent({
         padding: 1rem;
         width: 100%;
 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @include aligment;
 
         background: rgba(0, 0, 0, 0.25);
         border-radius: 6px;
@@ -94,25 +103,57 @@ export default defineComponent({
 
         border-left: .2rem solid #00FF19;
 
+        &-buttons {
+            height: 2rem;
+            @include aligment;
 
-        p {
-            color: rgba($color: #fff, $alpha: .8);
-            overflow: hidden;
-        }
+            .input-edit {
+                background-color: transparent;
+                color: #fff;
+                border-color: transparent;
+                border-bottom: 1px solid rgba($color: #fff, $alpha: .5);
+                outline: none;
+                font-style: italic;
+                font-size: 12px;
+            }
 
-        div {
+
+            p {
+                color: rgba($color: #fff, $alpha: .8);
+                overflow: hidden;
+            }
+
+
             button {
+                cursor: pointer;
                 background-color: transparent;
                 border: transparent;
                 padding: 0;
+            }
+
+            .check-item {
+                cursor: pointer;
+                border-radius: 50%;
+                border: 1.5px solid #4ecb71;
+                width: 1.5rem;
+                height: 1.5rem;
+                position: relative;
+                transition: .8s;
+                box-sizing: border-box;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
 
                 svg {
-                    margin-right: 1rem;
-                    transition: .5s;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
 
-                    &:hover {
-                        transform: scale(1.2);
-                    }
+                &.done {
+                    background-color: #4ecb71;
                 }
             }
         }

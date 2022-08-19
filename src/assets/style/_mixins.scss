@@ -1,20 +1,26 @@
 @mixin inputForm {
-    background-color: rgba($color: #ffffff, $alpha: .7);
-    color: #000;
-    border-radius: 6px;
-    height: 2rem;
-    border-color: transparent;
-    outline: none
+  background-color: rgba($color: #ffffff, $alpha: 0.7);
+  color: #000;
+  border-radius: 6px;
+  height: 2rem;
+  border-color: transparent;
+  outline: none;
 }
 
 @mixin title {
-    font-weight: 600;
-    font-size: 3rem;
-    cursor: default;
+  font-weight: 600;
+  font-size: 3rem;
+  cursor: default;
 }
 
 @mixin base {
-    display: block;
-    margin: 5rem auto;
-    max-width: 50%;
+  display: block;
+  margin: 5rem auto;
+  max-width: 50%;
+}
+
+@mixin aligment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
