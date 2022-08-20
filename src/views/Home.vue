@@ -60,11 +60,6 @@ button {
   transition: .5s;
 
 
-  @include mobile {
-     padding: 8px;
-     font-size: .7rem;
-  }
-
   &:hover {
     background-color: rgb(139, 145, 169);
     border-color: rgba($color: #ffffff, $alpha: .2);
