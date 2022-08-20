@@ -58,6 +58,7 @@ button {
   text-transform: uppercase;
   letter-spacing: .1rem;
   transition: .5s;
+  cursor: pointer;
 
 
   &:hover {

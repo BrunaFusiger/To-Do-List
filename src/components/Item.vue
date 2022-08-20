@@ -108,6 +108,16 @@ export default defineComponent({
     @include base;
     margin-bottom: -3rem;
 
+    .input-edit {
+        background-color: transparent;
+        color: #fff;
+        border-color: transparent;
+        border-bottom: 1px solid rgba($color: #fff, $alpha: .5);
+        outline: none;
+        font-style: italic;
+        font-size: 12px;
+    }
+
     .todoItem {
         margin: 0;
         padding: 1rem;
@@ -122,17 +132,6 @@ export default defineComponent({
         &-buttons {
             height: 2rem;
             @include aligment;
-
-            .input-edit {
-                background-color: transparent;
-                color: #fff;
-                border-color: transparent;
-                border-bottom: 1px solid rgba($color: #fff, $alpha: .5);
-                outline: none;
-                font-style: italic;
-                font-size: 12px;
-            }
-
 
             p {
                 color: rgba($color: #fff, $alpha: .8);
